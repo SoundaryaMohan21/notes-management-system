@@ -1,182 +1,158 @@
-# Alemeno Backend Assignment
+# Notes Management System
 
-# AI-Powered Transaction Processing Pipeline
-
-A production-ready backend service built using **FastAPI**, **Celery**, **Redis**, **PostgreSQL**, and **Google Gemini AI** for processing financial transaction CSV files asynchronously.
-
-The application validates uploaded CSV files, removes duplicate transactions, classifies uncategorized transactions using AI, detects suspicious transactions, generates spending summaries, and stores all cleaned records in PostgreSQL while tracking every processing job.
+A full-stack **Notes Management System** built using **FastAPI**, **React (Vite)**, **PostgreSQL**, and **JWT Authentication**. The application allows users to securely register, log in, and manage their personal notes through protected REST APIs and a simple React frontend.
 
 ---
 
-# Features
+## Features
 
-* Upload transaction CSV files
-* Background processing using Celery
-* Redis task queue integration
-* Automatic duplicate transaction removal
-* PostgreSQL database storage
-* AI-powered transaction category classification using Google Gemini
-* AI-powered anomaly detection
-* AI-generated spending summary
-* Job status tracking
-* Retrieve processed transaction results
-* RESTful APIs
-* Interactive Swagger Documentation
-* Dockerized deployment
-* Modular and scalable project architecture
+### Authentication
+- User Registration
+- User Login
+- Password Hashing using bcrypt
+- JWT Authentication
+- Protected API Endpoints
 
----
+### Notes Management
+- Create Notes
+- View Notes
+- Update Notes
+- Delete Notes
+- User-specific Notes
 
-# Tech Stack
-
-* Python 3.13
-* FastAPI
-* SQLAlchemy
-* PostgreSQL
-* Redis
-* Celery
-* Docker
-* Docker Compose
-* Pandas
-* Google Gemini API
-* Pydantic
-* Uvicorn
+### Frontend
+- React (Vite)
+- Register & Login Interface
+- Welcome Dashboard
+- Create, Edit & Delete Notes
+- Logout
+- Success & Error Messages
 
 ---
 
-## System Architecture
+## Tech Stack
 
-The following architecture illustrates the end-to-end workflow of the AI-powered transaction processing pipeline. It demonstrates how transaction CSV files are uploaded, processed asynchronously using Celery and Redis, enhanced with Google Gemini AI for intelligent analysis, and finally stored in PostgreSQL for retrieval through REST APIs.
+### Backend
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
+- JWT Authentication
+- Passlib (bcrypt)
+- Pydantic
 
-![System Architecture](architecture.png)
+### Frontend
+- React.js (Vite)
+- JavaScript
+- Fetch API
+- CSS
+
+### Database
+- PostgreSQL
+
+### Documentation
+- Swagger UI
 
 ---
 
-# Project Structure
+## Project Structure
 
-```text
-alemeno-assignment/
+```
+notes-management-system/
 │
 ├── app/
 │   ├── core/
-│   │   └── database.py
-│   │
 │   ├── models/
-│   │   ├── job.py
-│   │   └── transaction.py
-│   │
 │   ├── routers/
-│   │   └── jobs.py
-│   │
 │   ├── schemas/
-│   │
-│   ├── services/
-│   │   ├── csv_processor.py
-│   │   ├── llm_service.py
-│   │   └── transaction_service.py
-│   │
-│   ├── worker.py
-│   ├── tasks.py
+│   ├── auth.py
 │   └── main.py
 │
-├── uploads/
-├── reports/
-├── tests/
-├── docker-compose.yml
-├── Dockerfile
-├── requirements.txt
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.js
+│
 ├── README.md
-└── .env
+├── Scalability.md
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+└── architecture.png
 ```
 
 ---
 
-# Installation
+## API Endpoints
 
-## Clone Repository
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/auth/register` | Register User |
+| POST | `/api/v1/auth/login` | Login User |
+
+### Notes
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/notes/` | Get All Notes |
+| POST | `/api/v1/notes/` | Create Note |
+| GET | `/api/v1/notes/{id}` | Get Note by ID |
+| PUT | `/api/v1/notes/{id}` | Update Note |
+| DELETE | `/api/v1/notes/{id}` | Delete Note |
+
+---
+
+## Installation
+
+### Backend
+
+Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/alemeno-backend-assignment.git
-
-cd alemeno-backend-assignment
+git clone https://github.com/SoundaryaMohan21/notes-management-system.git
 ```
 
----
+Navigate to the project
 
-## Create Virtual Environment
+```bash
+cd notes-management-system
+```
+
+Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+Activate the virtual environment
 
 Windows
 
 ```bash
-python -m venv venv
-
 venv\Scripts\activate
 ```
 
-Linux / macOS
-
-```bash
-python3 -m venv venv
-
-source venv/bin/activate
-```
-
----
-
-## Install Dependencies
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## Configure Environment Variables
-
-Create a `.env` file.
-
-```env
-GEMINI_API_KEY=your_gemini_api_key
-
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/alemeno_db
-
-REDIS_URL=redis://localhost:6379/0
-```
-
----
-
-## Start Docker Services
-
-```bash
-docker compose up -d
-```
-
-This starts:
-
-* PostgreSQL
-* Redis
-
----
-
-## Start FastAPI Server
+Run the backend
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
----
+Backend URL
 
-## Start Celery Worker
-
-```bash
-celery -A app.worker.celery_app worker --loglevel=info
+```
+http://127.0.0.1:8000
 ```
 
----
-
-# Swagger Documentation
-
-After starting the application:
+Swagger Documentation
 
 ```
 http://127.0.0.1:8000/docs
@@ -184,185 +160,70 @@ http://127.0.0.1:8000/docs
 
 ---
 
-# API Endpoints
+### Frontend
 
-## Upload CSV
+Navigate to the frontend folder
 
-```
-POST /jobs/upload
-```
-
-Uploads a transaction CSV file and starts asynchronous processing.
-
----
-
-## List Jobs
-
-```
-GET /jobs
+```bash
+cd frontend
 ```
 
-Returns all processing jobs.
+Install dependencies
 
----
-
-## Get Job Status
-
-```
-GET /jobs/{job_id}/status
+```bash
+npm install
 ```
 
-Returns processing status for a specific job.
+Run the React application
 
----
-
-## Get Job Results
-
-```
-GET /jobs/{job_id}/results
+```bash
+npm run dev
 ```
 
-Returns processed transactions for a specific job.
-
----
-
-# AI Features
-
-The project integrates **Google Gemini** to provide intelligent financial analysis.
-
-### Transaction Category Classification
-
-Automatically classifies transactions whose category is missing.
-
-Example Categories
-
-* Food
-* Shopping
-* Travel
-* Transport
-* Utilities
-* Entertainment
-* Cash Withdrawal
-* Other
-
----
-
-### Anomaly Detection
-
-Each transaction is analyzed by Gemini to determine whether it appears suspicious.
-
-Possible Output
+Frontend URL
 
 ```
-Yes
-```
-
-or
-
-```
-No
+http://localhost:5173
 ```
 
 ---
 
-### Spending Summary
+## Authentication
 
-Gemini generates a financial summary including
+JWT (JSON Web Token) is used to secure protected APIs.
 
-* Spending insights
-* Overall spending behaviour
-* Risk level
-
-Example
-
-```json
-{
-    "narrative": "Most expenses were related to shopping and food. Spending is balanced with no major anomalies.",
-    "risk_level": "Low"
-}
-```
+After login, the access token is stored and sent in the Authorization header to access protected routes.
 
 ---
 
-# Sample Workflow
+## Security Features
 
-1. Upload CSV
-2. Celery receives background task
-3. CSV is validated
-4. Duplicate transactions are removed
-5. Missing categories are classified using Gemini
-6. Transactions are checked for anomalies
-7. Data is stored in PostgreSQL
-8. Spending summary is generated
-9. Job status is updated
-10. Results are available through the API
+- Password Hashing using bcrypt
+- JWT Authentication
+- Protected API Endpoints
+- Input Validation using Pydantic
+- Error Handling
+- User-specific Notes Access
 
 ---
 
-# Example Upload Response
+## Scalability
 
-```json
-{
-    "job_id": 662686,
-    "status": "PENDING",
-    "message": "CSV uploaded successfully. Processing started."
-}
-```
+Future improvements include:
 
----
+- Redis Caching
+- Microservices Architecture
+- Load Balancing
+- Docker Deployment
+- Logging & Monitoring
+- Database Replication
 
-# Example Job Status
-
-```json
-{
-    "job_id": 662686,
-    "status": "completed",
-    "row_count_raw": 95,
-    "row_count_clean": 82
-}
-```
+See **Scalability.md** for more details.
 
 ---
 
-# Improvements Implemented
-
-* Duplicate transaction removal
-* Duplicate database protection
-* Background task processing
-* AI-powered category prediction
-* AI-powered anomaly detection
-* AI-generated spending summary
-* Job tracking
-* PostgreSQL integration
-* Redis queue
-* Docker support
-* Modular architecture
-* Swagger documentation
-* Error handling
-* Logging
-
----
-
-# Future Enhancements
-
-* JWT Authentication
-* Role-Based Access Control
-* Batch upload support
-* Email notifications
-* Dashboard analytics
-* Export processed transactions
-* Unit and integration testing
-* CI/CD pipeline
-
----
-
-# Author
+## Author
 
 **Soundarya M**
 
-B.Tech Artificial Intelligence & Data Science
-
-KCG College of Technology
-
-GitHub:
-https://github.com/SoundaryaMohan21
+Backend Developer Assignment
